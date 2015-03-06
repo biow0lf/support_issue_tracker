@@ -1,9 +1,19 @@
 Rails.application.routes.draw do
+  devise_for :users
+  resources :tickets
+  resources :comments, only: [:create, :destroy]
+  get 'unassigned_tickets' => 'unassigned_tickets#index'
+  get 'open_tickets' => 'open_tickets#index'
+  get 'on_hold_tickets' => 'on_hold_tickets#index'
+  get 'closed_tickets' => 'closed_tickets#index'
+  get 'search' => 'search#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
+  root 'tickets#new'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

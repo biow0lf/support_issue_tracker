@@ -1,0 +1,40 @@
+!!!
+%html
+  %head>
+    %title Support Issue Tracker
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tags
+
+  %body
+    .container
+      - if alert
+        .alert.alert-warning.alert-dismissible{ role: 'alert'}
+          %button.close{ :type => 'button', :'data-dismiss' => 'alert', :'aria-label' => 'Close' }
+            %span{ :'aria-hidden' => 'true' }
+              &times;
+          = alert
+
+      - if notice
+        .alert.alert-success.alert-dismissible{ role: 'alert'}
+          %button.close{ :type => 'button', :'data-dismiss' => 'alert', :'aria-label' => 'Close' }
+            %span{ :'aria-hidden' => 'true' }
+              &times;
+          = notice
+
+      = link_to 'New ticket', new_ticket_path, class: 'btn btn-primary'
+      \|
+      - if user_signed_in?
+        = link_to 'Unassigned tickets', unassigned_tickets_path, class: 'btn btn-primary'
+        = link_to 'Open tickets', open_tickets_path, class: 'btn btn-primary'
+        = link_to 'On hold tickets', on_hold_tickets_path, class: 'btn btn-primary'
+        = link_to 'Closed tickets', closed_tickets_path, class: 'btn btn-primary'
+        = link_to 'Search', search_path, class: 'btn btn-primary'
+        \|
+        = link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-primary'
+      - else
+        = link_to 'Sign in', new_user_session_path, class: 'btn btn-primary'
+        \|
+        = link_to 'Sign up', new_user_registration_path, class: 'btn btn-primary'
+
+      = yield

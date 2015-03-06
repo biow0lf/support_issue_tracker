@@ -1,0 +1,37 @@
+= form_for(@comment, html: { role: 'form' }) do |f|
+  - if @comment.errors.any?
+    #error_explanation
+      %h2= "#{ pluralize(@comment.errors.count, 'error') } prohibited this comment from being saved:"
+      %ul
+      - @comment.errors.full_messages.each do |message|
+        %li= message
+
+  = f.hidden_field :ticket_id
+  .form-group
+    = f.label :name
+    .input-group
+      .input-group-addon= icon('user')
+      = f.text_field :name, class: 'form-control', required: 'required', placeholder: 'e.g. John Snow or Barbra Streisand'
+  .form-group
+    = f.label :email
+    .input-group
+      .input-group-addon= icon('envelope')
+      - if current_user
+        = f.email_field :email, class: 'form-control', required: 'required', placeholder: 'me@example.com', value: "#{ current_user.email }"
+      - else
+        = f.email_field :email, class: 'form-control', required: 'required', placeholder: 'me@example.com'
+  - if current_user
+    .form-group
+      = label :ticket, :user_id, 'Assigned to:'
+      .input-group
+        = select :ticket, :user_id, User.all.collect { |u| [u.email, u.id] }, { include_blank: true }, { class: 'selectpicker' }
+  .form-group
+    = label :ticket, :status_id, 'Status:'
+    .input-group
+      = select :ticket, :status_id, Status.all.collect { |s| [s.name, s.id] }, { include_blank: false }, { class: 'selectpicker' }
+  .form-group
+    = f.label :body, 'Comment'
+    = f.text_area :body, class: 'form-control', rows: 8, required: 'required', placeholder: 'Comment body'
+  %button{ type: 'submit', class: 'btn btn-primary' }
+    = icon('paper-plane')
+    &nbsp;Send

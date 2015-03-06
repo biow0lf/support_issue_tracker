@@ -3,4 +3,8 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+# elasticsearch
+require 'elasticsearch/extensions/test/cluster/tasks'
+
+
 Rails.application.load_tasks

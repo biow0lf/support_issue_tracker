@@ -1,0 +1,23 @@
+Hello <%= @ticket.first_name %>,
+
+Ticket with id <%= @ticket.uid %> was updated.
+
+<% if @user %>
+User <%= @user.email %> changed:
+<% end %>
+
+<% if @changes.include?('user_id') %>
+  <% if @changes[:user_id].first && @changes[:user_id].last %>
+    Assigned from <%= User.find_by_id(@changes[:user_id].first).email %> to <%= User.find_by_id(@changes[:user_id].last).email %>.
+  <% elsif @changes[:user_id].first.nil? && @changes[:user_id].last %>
+    Assigned changes to <%= User.find_by_id(@changes[:user_id].last).email %>.
+  <% elsif @changes[:user_id].first && @changes[:user_id].last.nil? %>
+    Assigned changes from <%= User.find_by_id(@changes[:user_id].first).email %> to nobody.
+  <% end %>
+<% end %>
+
+<% if @changes.include?('status_id') %>
+  Status from <%= Status.find_by_id(@changes[:status_id].first).name %> to <%= Status.find_by_id(@changes[:status_id].last).name %>.
+<% end %>
+
+Url: <%= ticket_url(@ticket) %>

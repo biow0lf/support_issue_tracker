@@ -1,0 +1,13 @@
+AllCops:
+  RunRailsCops: true
+  Exclude:
+    - 'bin/rails'
+    - 'bin/rake'
+    - 'bin/setup'
+    - 'db/schema.rb'
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false

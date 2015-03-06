@@ -1,0 +1,12 @@
+Hello <%= @ticket.first_name %>,
+
+Ticket with id <%= @ticket.uid %> created.
+
+Summary: <%= @ticket.summary %>
+
+Department: <%= @ticket.department.name %>
+
+Text:
+<%= @ticket.body %>
+
+Url: <%= ticket_url(@ticket) %>

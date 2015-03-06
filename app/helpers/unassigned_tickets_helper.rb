@@ -1,0 +1,2 @@
+module UnassignedTicketsHelper
+end

@@ -1,0 +1,44 @@
+= form_for(@ticket, html: { role: 'form' }) do |f|
+  - if @ticket.errors.any?
+    #error_explanation
+      %h2= "#{ pluralize(@ticket.errors.count, 'error') } prohibited this ticket from being saved:"
+      %ul
+        - @ticket.errors.full_messages.each do |msg|
+          %li= msg
+
+  .form-group
+    = f.label :name
+    .input-group
+      .input-group-addon= icon('user')
+      = f.text_field :name, class: 'form-control', required: 'required', placeholder: 'e.g. John Snow or Barbra Streisand', autofocus: 'autofocus'
+  .form-group
+    = f.label :email
+    .input-group
+      .input-group-addon= icon('envelope')
+      = f.email_field :email, class: 'form-control', required: 'required', placeholder: 'me@example.com'
+  .form-group
+    = f.label :department
+    .input-group
+      = f.collection_select :department_id, Department.all, :id, :name, { include_blank: false }, { class: 'selectpicker' }
+  - unless @ticket.new_record?
+    .form-group
+      = f.label :status
+      .input-group
+        = f.collection_select :status_id, Status.all, :id, :name, { include_blank: false }, { class: 'selectpicker' }
+  - if current_user && !@ticket.new_record?
+    .form-group
+      = f.label :user_id, 'Assigned to:'
+      .input-group
+        = f.collection_select :user_id, User.all, :id, :email, { include_blank: true }, { class: 'selectpicker' }
+  .form-group
+    = f.label :summary
+    = f.text_field :summary, class: 'form-control', required: 'required', placeholder: 'Short ticket summary'
+  .form-group
+    = f.label :body
+    = f.text_area :body, class: 'form-control', rows: 8, required: 'required', placeholder: 'Full ticket description'
+  %button{ type: 'submit', class: 'btn btn-primary' }
+    = icon('paper-plane')
+    &nbsp;Send
+  - unless @ticket.new_record?
+    \|
+    = link_to 'Show ticket', @ticket, class: 'btn btn-primary'

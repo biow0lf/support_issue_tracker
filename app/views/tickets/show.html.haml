@@ -1,0 +1,43 @@
+%div
+  %h3
+    %b Summary:
+    = "[#{ @ticket.uid }] #{ @ticket.summary }"
+
+.highlight
+  %div
+    %b Created by:
+    = "#{ @ticket.name } (#{ @ticket.email }) #{ time_ago_in_words(@ticket.created_at) } ago"
+
+  %div
+    %b Status:
+    = @ticket.status.name
+
+  %div
+    %b Department:
+    = @ticket.department.name
+
+  - if @ticket.user
+    %div
+      %b Assigned to:
+      = @ticket.user.email
+
+  %div
+    %b Description:
+    = simple_format @ticket.body
+
+  = link_to 'Edit', edit_ticket_path(@ticket), class: 'btn btn-primary'
+  \|
+  = link_to 'Destroy', @ticket, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+
+
+- if @comments.any?
+  %h3 Comments:
+  - @comments.each do |comment|
+    .highlight
+      %strong= "#{ comment.name } (#{ comment.email }) #{ time_ago_in_words(comment.created_at) } ago"
+      %br
+      %p= simple_format comment.body
+      %p= link_to 'Delete', comment_path(comment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-primary'
+
+.highlight
+  = render 'comments/form'

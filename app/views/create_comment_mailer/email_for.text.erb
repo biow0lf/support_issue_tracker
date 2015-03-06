@@ -1,0 +1,7 @@
+Hello <%= @comment.ticket.first_name  %>,
+
+<%= @comment.name %> (<%= @comment.email %>) added comment
+to ticket [<%= @comment.ticket.uid %>] <%= @comment.ticket.summary %>.
+
+Comment:
+<%= @comment.body %>

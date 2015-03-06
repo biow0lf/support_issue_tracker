@@ -1,0 +1,18 @@
+%h1 Closed tickets
+
+- if @tickets.any?
+  %table.table.table-hover.table-bordered
+    %thead
+      %tr
+        %th
+          %b UID:
+        %th
+          %b
+            Status:
+        %th
+          %b Summary:
+    - @tickets.each do |ticket|
+      %tr
+        %td= link_to ticket.uid, ticket_path(ticket)
+        %td= link_to ticket.status.name, ticket_path(ticket)
+        %td= link_to ticket.summary, ticket_path(ticket)

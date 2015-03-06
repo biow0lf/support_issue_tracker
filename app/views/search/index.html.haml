@@ -1,0 +1,27 @@
+%h1 Search:
+
+= form_tag search_path, method: :get, class: 'form-inline' do
+  .form-group
+    .input-group
+      .input-group-addon= icon('search')
+      = text_field_tag :q, params[:q] ? params[:q] : '', placeholder: 'Search...', size: '50', class: 'form-control'
+  %button{ type: 'submit', class: 'btn btn-primary' } Find
+
+- if @tickets.any?
+  %br
+
+  %table.table.table-hover.table-bordered
+    %thead
+      %tr
+        %th
+          %b UID:
+        %th
+          %b
+            Status:
+        %th
+          %b Summary:
+    - @tickets.each do |ticket|
+      %tr
+        %td= link_to ticket.uid, ticket_path(ticket)
+        %td= link_to ticket.status.name, ticket_path(ticket)
+        %td= link_to ticket.summary, ticket_path(ticket)
